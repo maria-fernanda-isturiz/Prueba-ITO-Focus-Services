@@ -1,19 +1,52 @@
-import React from 'react';
-import { CartProvider } from './CartContext';
-import ListaProductos from './ListaProductos';
-import Carro from './Carro';
+import React, { useState } from 'react';
+import {ProductList}from './ProductList';
+// import {Product} from './types';
+import SelectedProducts from './SelectedProducts';
+import ReadyProducts from './ReadyProducts';
 
-function App() {
-  return (
-    <CartProvider>
-      <div className="app">
-        <h1><strong>Tienda de compras</strong></h1>
-        <h3>A continuación, podrás seleccionar uno o varios productos para consumir y al final, verás los productos seleccionados</h3>
-        <ListaProductos />
-        <Carro />
-      </div>
-    </CartProvider>
-  )
+export interface Product {
+  id: string;
+  name: string;
+  preparation_time: number; 
+  thumbnail: string
 }
 
-export default App
+interface ProductListProps extends Product {
+  addToWaitingList: (product: Product) => void;
+}
+
+const App: React.FC = () => {
+    const [waitingList, setWaitingList] = useState<Product[]>([]);
+    const [readyList, setReadyList] = useState<Product[]>([]);
+
+    const addToWaitingList = (product: Product) => {
+        setWaitingList([...waitingList, { ...product}]);
+    };
+
+    const moveToReadyList = (productId: string) => {
+        const product = waitingList.find(p => p.id === productId);
+        if (product) {
+            setReadyList([...readyList, product]);
+            setWaitingList(waitingList.filter(p => p.id !== productId));
+        }
+    };
+
+    const removeProduct = (productId: string, isReady: boolean) => {
+        if (isReady) {
+            setReadyList(readyList.filter(p => p.id !== productId));
+        } else {
+            setWaitingList(waitingList.filter(p => p.id !== productId));
+        }
+    };
+
+    return (
+        <div>
+            <h1>Máquina Expendedora</h1>
+            <ProductList addToWaitingList={addToWaitingList} /><br/>
+            <SelectedProducts waitingList={waitingList} moveToReadyList={moveToReadyList} removeProduct={removeProduct} /><br />
+            <ReadyProducts readyList={readyList} removeProduct={removeProduct} />
+        </div>
+    );
+};
+
+export default App;

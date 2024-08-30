@@ -3,7 +3,7 @@ import { useCart } from './CartContext';
 import {RemoveFromCartIcon, ClearCartIcon} from './Icons';
 
 const Carro: React.FC = () => {
-	const {cart, removeFromCart, clearCart, processOrder} = useCart();
+	const {cart, removeFromCart, clearCart} = useCart();
 
 	return (
 		<div className="cart">

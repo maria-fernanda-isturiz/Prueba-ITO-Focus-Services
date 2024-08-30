@@ -16,7 +16,7 @@ const ListaProductos: React.FC = () => {
 				const productsData = await fetchProducts();
 				setProducts(productsData);
 			} catch(err) {
-					setError(err.message);
+					setError(err instanceof Error ? err.message : 'Error fetching products');
 			} finally {
 				setLoading(false);
 			}
