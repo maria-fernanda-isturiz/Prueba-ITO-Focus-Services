@@ -1,3 +1,17 @@
+/* Componentes utilizados: ProductList, SelectedProducts, ReadyProducts y Timer
+
+El primer componente muestra los productos en la API con una petición GET y contiene una serie de acciones y lógica de programación
+que permite agregar productos al carrito de compras.
+
+El segundo componente muestra los productos seleccionados en el carrito y el temporizador o “timer” que descuenta en forma regresiva los
+segundos que tarda un producto en ser preparado al 100% y estar listo
+
+EL tercer componente muestra los productos que ya están listos, una vez el temporizador o “timer” ha llegado hasta 0 y el proceso de
+preparaciôn ha sido finalizado.
+
+La aplicación cuenta con 2 listas: la primera en donde se muestran los productos en proceso de preparación, con el temporizador o “timer”
+descontando los segundos hasta llegar a 0 y la segunda lista que muestra los productos ya listos para ser retirados por el cliente.*/
+
 import React, { useState } from 'react';
 import {ProductList}from './ProductList';
 // import {Product} from './types';
@@ -50,3 +64,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
